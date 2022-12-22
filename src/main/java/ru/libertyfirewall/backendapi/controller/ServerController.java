@@ -96,9 +96,9 @@ public class ServerController {
         return ok;
     }
 
-    @GetMapping(path = "/image/{fileName}", params = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(path = "/image/{fileName}", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getServerImage(@PathVariable("fileName") String fileName) throws IOException {
-        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "Desktop"
+        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + File.separator + "Desktop"
                 + File.separator + "liberty-firewall" + File.separator +  "server-images" + File.separator + fileName ));
     }
 }
