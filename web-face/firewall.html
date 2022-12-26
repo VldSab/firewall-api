@@ -72,7 +72,6 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
-
     </style>
 
     
@@ -80,8 +79,8 @@
     <link href="sidebars.css" rel="stylesheet">
   </head>
   <body>
-
-
+    
+  
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="bootstrap" viewBox="0 0 118 94">
     <title>Bootstrap</title>
@@ -144,6 +143,7 @@
 <main class="d-flex flex-nowrap">
   <h1 class="visually-hidden">Sidebars examples</h1>
 
+  
   <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <svg class="bi pe-none me-2" width="40" height="32"></svg>
@@ -152,16 +152,16 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="index.html" class="nav-link active" aria-current="page">
+        <a href="index.html" class="nav-link text-white" aria-current="page">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           Home
         </a>
       </li>
       <li class="nav-item">
-        <button class="btn align-items-center rounded collapsed text-white" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" >
+        <a class="nav-link text-white active collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" >
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
             Firewall
-        </button>
+        </a>
         <div class="collapse" id="dashboard-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a href="firewall.html" class="link-dark rounded text-white">Overview</a></li>
@@ -190,21 +190,81 @@
       </li>
     </ul>
   </div>
-
+  
   <div class="container text-center">
     <div class="row">
-      <div class="col">Состояние системы</div>
+      <div class="col-sm-8">Управление</div>
+      <div class="col-sm-4">Статистика</div>
     </div>
     <hr>
     <div class="row">
       <div class="col-sm">
         <div>
-          Устройство
+          Добавить правило
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Протокол</label>
+          <select class="form-select" id="inputGroupSelect01">
+            <option selected>TCP</option>
+            <option value="1">UDP</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon3">IP</span>
+          <input type="text" class="form-control" id="basic-url" placeholder="Введите IP" aria-describedby="basic-addon3">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <option selected>IPv4</option>
+            <option value="1">IPv6</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1">Домен</span>
+          <input type="text" class="form-control" placeholder="example.com" aria-label="Введите" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <option selected>Блокировать</option>
+            <option value="1">Пропускать</option>
+            <option value="2">Осведомлять</option>
+          </select>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">Создать</button>
+        </div>
+        <hr>
+        Загрузить правила
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Синтаксис</label>
+          <select class="form-select" id="inputGroupSelect01">
+            <option selected>BPF</option>
+            <option value="1">iptables</option>
+            <option value="2">nftables</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">Создать</button>
         </div>
       </div>
 
       <div class="col-sm">
-        Сеть
+        Загрузить сигнатуры
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Синтаксис</label>
+          <select class="form-select" id="inputGroupSelect01">
+            <option selected>BPF</option>
+            <option value="1">iptables</option>
+            <option value="2">nftables</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit">Создать</button>
+        </div>
       </div>
       
       <div class="col-sm">
