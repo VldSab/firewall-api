@@ -5,8 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ru.libertyfirewall.backendapi.enumeration.Status;
+import ru.libertyfirewall.backendapi.enumeration.rules.Action;
+import ru.libertyfirewall.backendapi.enumeration.rules.Protocol;
+import ru.libertyfirewall.backendapi.model.Rule;
 import ru.libertyfirewall.backendapi.model.Server;
+import ru.libertyfirewall.backendapi.repository.RuleRepository;
 import ru.libertyfirewall.backendapi.repository.ServerRepository;
+import ru.libertyfirewall.backendapi.util.AdditionalRuleParameters;
 
 @SpringBootApplication
 public class BackendApiApplication {
@@ -16,25 +21,18 @@ public class BackendApiApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(ServerRepository serverRepository) {
+	CommandLineRunner run(RuleRepository ruleRepository) {
 		return args -> {
-			serverRepository.save(new Server(
+			ruleRepository.save(new Rule(
 					null,
-					"172.0.0.1",
-					"Ubuntu",
-					"16 GB",
-					"Personal computer",
-					"http://localhost:8080/server/image/server1.png",
-					Status.SERVER_UP));
-
-			serverRepository.save(new Server(
-					null,
-					"172.0.0.2",
-					"Windows",
-					"32 GB",
-					"Host",
-					"http://localhost:8080/server/image/server2.png",
-					Status.SERVER_DOWN));
+					Action.ALERT,
+					Protocol.TCP,
+					"any",
+					"80",
+					"any",
+					"any",
+					AdditionalRuleParameters.MESSAGE)
+			);
 		};
 	}
 

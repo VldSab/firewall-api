@@ -1,8 +1,11 @@
 plugins {
     java
-    kotlin("jvm") version "1.8.0-Beta"
     id("org.springframework.boot") version "3.0.0"
     id("io.spring.dependency-management") version "1.1.0"
+}
+
+repositories {
+    mavenCentral()
 }
 
 group = "ru.liberty-firewall"
@@ -13,10 +16,6 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
