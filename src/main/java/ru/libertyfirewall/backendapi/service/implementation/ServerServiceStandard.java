@@ -20,7 +20,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class ServerServiceStandart implements ServerService {
+public class ServerServiceStandard implements ServerService {
 
     private final ServerRepository serverRepository;
 

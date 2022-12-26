@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.libertyfirewall.backendapi.enumeration.Status;
 import ru.libertyfirewall.backendapi.model.Response;
 import ru.libertyfirewall.backendapi.model.Server;
-import ru.libertyfirewall.backendapi.service.implementation.ServerServiceStandart;
+import ru.libertyfirewall.backendapi.service.implementation.ServerServiceStandard;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ServerController {
 
-    private final ServerServiceStandart serverServiceStandart;
+    private final ServerServiceStandard serverServiceStandart;
 
     @GetMapping("/list")
     public ResponseEntity<Response> getServers() {
