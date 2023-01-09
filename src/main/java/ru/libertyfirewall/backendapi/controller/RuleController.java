@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.libertyfirewall.backendapi.model.Response;
 import ru.libertyfirewall.backendapi.model.Rule;
-import ru.libertyfirewall.backendapi.model.Server;
 import ru.libertyfirewall.backendapi.service.implementation.RuleServiceStandard;
 
 import java.time.LocalDateTime;
