@@ -1,10 +1,10 @@
 package ru.libertyfirewall.backendapi.enumeration.rules;
 
 public enum Action {
-    DROP("drop"),
-    ALERT("alert"),
-    PASS("pass"),
-    REJECT("reject");
+    DROP("DROP"),
+    ALERT("ALERT"),
+    PASS("PASS"),
+    REJECT("REJECT");
 
     private final String actionName;
 
