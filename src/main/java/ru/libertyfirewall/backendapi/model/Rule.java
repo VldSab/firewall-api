@@ -19,6 +19,9 @@ import static jakarta.persistence.GenerationType.AUTO;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Rule {
+    /**
+     * Модель сущности правила Suricata.
+     */
     @Id
     @GeneratedValue(strategy = AUTO)
     private Long id;
@@ -26,14 +29,14 @@ public class Rule {
     private Action action;
     @NotNull(message = "Protocol cannot be empty or null")
     private Protocol protocol;
-    @NotEmpty(message = "Source IP cannot be empty or null")
-    private String srcIP;
+    private String srcIPs;
+    private Long srcGroupID;
     @NotEmpty(message = "Source port cannot be empty or null")
-    private String srcPort;
-    @NotEmpty(message = "Destination IP cannot be empty or null")
-    private String dstIP;
+    private String srcPorts;
+    private String dstIPs;
+    private Long dstGroupID;
     @NotEmpty(message = "Destination port address cannot be empty or null")
-    private String dstPort;
+    private String dstPorts;
     private String comment;
     private AdditionalRuleParameters additionalRuleParameters;
 }

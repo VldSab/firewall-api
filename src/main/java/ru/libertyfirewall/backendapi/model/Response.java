@@ -13,6 +13,9 @@ import java.util.Map;
 @SuperBuilder
 @JsonInclude(Include.NON_NULL)
 public class Response {
+    /**
+     * Модель ответа сервера.
+     */
     protected LocalDateTime time;
     protected int statusCode;
     protected HttpStatus status;

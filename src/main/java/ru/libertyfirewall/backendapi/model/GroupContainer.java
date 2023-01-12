@@ -25,4 +25,5 @@ public class GroupContainer {
     private String name;
     @ElementCollection
     private Collection<String> container;
+    private String comment;
 }

@@ -4,13 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import ru.libertyfirewall.backendapi.enumeration.Status;
 import ru.libertyfirewall.backendapi.enumeration.rules.Action;
 import ru.libertyfirewall.backendapi.enumeration.rules.Protocol;
 import ru.libertyfirewall.backendapi.model.Rule;
-import ru.libertyfirewall.backendapi.model.Server;
 import ru.libertyfirewall.backendapi.repository.RuleRepository;
-import ru.libertyfirewall.backendapi.repository.ServerRepository;
 import ru.libertyfirewall.backendapi.util.AdditionalRuleParameters;
 
 @SpringBootApplication
@@ -28,8 +25,10 @@ public class BackendApiApplication {
 					Action.ALERT,
 					Protocol.TCP,
 					"any",
+					null,
 					"80",
 					"any",
+					null,
 					"any",
 					"",
 					AdditionalRuleParameters.MESSAGE)

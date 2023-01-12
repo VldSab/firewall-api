@@ -1,17 +1,21 @@
 package ru.libertyfirewall.backendapi.enumeration.rules;
 
 public enum Protocol {
-    TCP("TCP"),
-    UDP("UDP"),
-    HTTP("HTTP"),
-    FTP("FTP"),
-    TLS("TLS"),
-    DNS("DNS"),
-    SSH("SSH");
+    TCP("tcp"),
+    UDP("udp"),
+    HTTP("http"),
+    FTP("ftp"),
+    TLS("tls"),
+    DNS("dns"),
+    SSH("ssh");
 
     private final String protocolName;
 
     Protocol(String protocolName) {
         this.protocolName = protocolName;
+    }
+
+    public String getProtocolName() {
+        return protocolName;
     }
 }

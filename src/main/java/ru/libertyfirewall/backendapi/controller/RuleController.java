@@ -21,13 +21,18 @@ public class RuleController {
 
     @PostMapping("/save")
     public ResponseEntity<Response> saveRule(@RequestBody @Valid Rule rule) {
+        boolean isValidRule = true;
+        if (rule.getSrcIPs() == null && rule.getSrcGroupID() == null
+                || rule.getDstIPs() == null && rule.getDstGroupID() == null)
+            isValidRule = false;
+
         return ResponseEntity.ok(
                 Response.builder()
                         .time(LocalDateTime.now())
-                        .data(Map.of("rule", ruleServiceStandard.create(rule)))
-                        .message("Rule created")
-                        .status(HttpStatus.CREATED)
-                        .statusCode(HttpStatus.CREATED.value())
+                        .data(isValidRule ? Map.of("rule", ruleServiceStandard.create(rule)) : Map.of("rule", null))
+                        .message(isValidRule ? "Rule created" : "Invalid rule")
+                        .status(isValidRule ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST)
+                        .statusCode(isValidRule ? HttpStatus.CREATED.value() : HttpStatus.BAD_REQUEST.value())
                         .build()
         );
     }
