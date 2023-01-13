@@ -1,6 +1,9 @@
 package ru.libertyfirewall.backendapi.enumeration.rules;
 
 public enum Action {
+    /**
+     * Составная часть Rule.
+     */
     DROP("drop"),
     ALERT("alert"),
     PASS("pass"),

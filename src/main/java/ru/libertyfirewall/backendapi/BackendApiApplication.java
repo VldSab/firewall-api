@@ -1,5 +1,6 @@
 package ru.libertyfirewall.backendapi;
 
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,7 @@ import ru.libertyfirewall.backendapi.repository.RuleRepository;
 import ru.libertyfirewall.backendapi.util.AdditionalRuleParameters;
 
 @SpringBootApplication
+@AllArgsConstructor
 public class BackendApiApplication {
 
 	public static void main(String[] args) {

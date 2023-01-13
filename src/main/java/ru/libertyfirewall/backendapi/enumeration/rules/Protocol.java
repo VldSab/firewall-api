@@ -1,6 +1,9 @@
 package ru.libertyfirewall.backendapi.enumeration.rules;
 
 public enum Protocol {
+    /**
+     * Составная часть Rule.
+     */
     TCP("tcp"),
     UDP("udp"),
     HTTP("http"),
