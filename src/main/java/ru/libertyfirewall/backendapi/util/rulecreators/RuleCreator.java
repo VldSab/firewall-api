@@ -42,7 +42,7 @@ public class RuleCreator implements RulesCreator {
         stringBuilder.append(rule.getAction().getActionName()).append(SPACE)
                 .append(rule.getProtocol().getProtocolName()).append(SPACE)
                 .append(source).append(SPACE).append(rule.getSrcPorts()).append(SPACE)
-                .append(ARROW).append(SPACE).append(destination).append(rule.getDstPorts());
+                .append(ARROW).append(SPACE).append(destination).append(SPACE).append(rule.getDstPorts());
 
         if (rule.getAdditionalRuleParameters() != null) stringBuilder.append(rule.getAdditionalRuleParameters());
         return stringBuilder.toString();

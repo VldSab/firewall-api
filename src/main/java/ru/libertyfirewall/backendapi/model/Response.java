@@ -22,5 +22,5 @@ public class Response {
     protected String reason;
     protected String message;
     protected String developerMessage;
-    protected Map<?, ?> data;
+    protected Object data;
 }

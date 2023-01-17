@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/group")
+@RequestMapping("/groups")
 @RequiredArgsConstructor
 public class GroupController {
 

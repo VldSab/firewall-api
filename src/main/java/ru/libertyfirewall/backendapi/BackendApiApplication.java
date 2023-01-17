@@ -32,9 +32,9 @@ public class BackendApiApplication {
 					"any",
 					null,
 					"any",
-					"",
-					AdditionalRuleParameters.MESSAGE)
-			);
+					AdditionalRuleParameters.MESSAGE,
+					" "
+			));
 		};
 	}
 

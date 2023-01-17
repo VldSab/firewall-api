@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.libertyfirewall.backendapi.model.RedisTest;
 import ru.libertyfirewall.backendapi.model.Response;
-import ru.libertyfirewall.backendapi.redis.MessagePublisher;
 import ru.libertyfirewall.backendapi.redis.RedisMessagePublisher;
 import ru.libertyfirewall.backendapi.redis.RedisMessageSubscriber;
-import ru.libertyfirewall.backendapi.redis.RedisConfig;
 
 import java.time.LocalDateTime;
 import java.util.Map;

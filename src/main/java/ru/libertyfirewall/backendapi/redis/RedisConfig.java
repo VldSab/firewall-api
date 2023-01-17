@@ -31,12 +31,17 @@ public class RedisConfig {
 
     @Bean
     public MessagePublisher redisPublisher() {
-        return new RedisMessagePublisher(redisTemplate(), topic());
+        return new RedisRulesPublisher(redisTemplate(), topicRules());
     }
 
-    @Bean
+    @Bean("topic")
     public ChannelTopic topic() {
         return new ChannelTopic("queue");
+    }
+
+    @Bean("topicRules")
+    public ChannelTopic topicRules() {
+        return new ChannelTopic("rules:queue");
     }
 
     @Bean
@@ -48,7 +53,7 @@ public class RedisConfig {
     public RedisMessageListenerContainer messageListenerContainer() {
         RedisMessageListenerContainer messageListenerContainer = new RedisMessageListenerContainer();
         messageListenerContainer.setConnectionFactory(connectionFactory());
-        messageListenerContainer.addMessageListener(messageListener(), topic());
+        messageListenerContainer.addMessageListener(messageListener(), topicRules());
         return messageListenerContainer;
     }
 

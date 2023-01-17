@@ -5,68 +5,77 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleExeption;
 import ru.libertyfirewall.backendapi.model.Response;
 import ru.libertyfirewall.backendapi.model.Rule;
 import ru.libertyfirewall.backendapi.service.implementation.RuleServiceStandard;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/rule")
+@RequestMapping("/rules")
 @RequiredArgsConstructor
 public class RuleController {
     private final RuleServiceStandard ruleServiceStandard;
 
     @PostMapping("/save")
     public ResponseEntity<Response> saveRule(@RequestBody @Valid Rule rule) {
-        boolean isValidRule = true;
-        if (rule.getSrcIPs() == null && rule.getSrcGroupID() == null
-                || rule.getDstIPs() == null && rule.getDstGroupID() == null)
-            isValidRule = false;
-
-        return ResponseEntity.ok(
-                Response.builder()
-                        .time(LocalDateTime.now())
-                        .data(isValidRule ? Map.of("rule", ruleServiceStandard.create(rule)) : Map.of("rule", null))
-                        .message(isValidRule ? "Rule created" : "Invalid rule")
-                        .status(isValidRule ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST)
-                        .statusCode(isValidRule ? HttpStatus.CREATED.value() : HttpStatus.BAD_REQUEST.value())
-                        .build()
-        );
+        Rule ruleCreated;
+        String message;
+        HttpStatus status;
+        try {
+           ruleCreated = ruleServiceStandard.create(rule);
+           message = "Правило создано";
+           status = HttpStatus.OK;
+        } catch (ValidationException e) {
+           message = e.getMessage();
+           status = HttpStatus.BAD_REQUEST;
+           ruleCreated = null;
+        }
+        return createResponse(status, message, ruleCreated);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> deleteRule(@PathVariable("id") Long id) {
         boolean isDeleted;
-        Map<String, Boolean> data;
+        String message;
+        HttpStatus status;
+
         try {
             isDeleted = ruleServiceStandard.delete(id);
-            data = Map.of("isDeleted", isDeleted);
+            message = "Правило удалено";
+            status = HttpStatus.OK;
         } catch (NoSuchRuleExeption e) {
-            data = Map.of(e.getMessage(), false);
+            isDeleted = false;
+            message = e.getMessage();
+            status = HttpStatus.BAD_REQUEST;
         }
-        return ResponseEntity.ok(
-                Response.builder()
-                        .time(LocalDateTime.now())
-                        .data(data)
-                        .message("Rule deleted")
-                        .status(HttpStatus.OK)
-                        .statusCode(HttpStatus.OK.value())
-                        .build()
-        );
+        return createResponse(status, message, isDeleted);
     }
 
     @GetMapping("/list")
     public ResponseEntity<Response> getRules() {
-        return ResponseEntity.ok(
+        return createResponse(HttpStatus.OK, "Правила получены", ruleServiceStandard.list());
+    }
+
+    private ResponseEntity<Response> createResponse(HttpStatus status, String message, Object data) {
+        if (status.equals(HttpStatus.OK))
+            return ResponseEntity.ok(
+                    Response.builder()
+                            .time(LocalDateTime.now())
+                            .message(message)
+                            .status(status)
+                            .statusCode(status.value())
+                            .data(data)
+                            .build()
+            );
+        return ResponseEntity.badRequest().body(
                 Response.builder()
                         .time(LocalDateTime.now())
-                        .data(Map.of("rules", ruleServiceStandard.list()))
-                        .message("Rules fetched")
-                        .status(HttpStatus.OK)
-                        .statusCode(HttpStatus.OK.value())
+                        .message(message)
+                        .status(status)
+                        .statusCode(status.value())
                         .build()
         );
     }

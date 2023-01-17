@@ -37,6 +37,7 @@ public class Rule {
     private Long dstGroupID;
     @NotEmpty(message = "Destination port address cannot be empty or null")
     private String dstPorts;
-    private String comment;
     private AdditionalRuleParameters additionalRuleParameters;
+    private String comment;
+
 }
