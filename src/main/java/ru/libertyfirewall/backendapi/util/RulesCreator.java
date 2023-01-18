@@ -1,4 +1,4 @@
-package ru.libertyfirewall.backendapi.util.rulecreators;
+package ru.libertyfirewall.backendapi.util;
 
 import ru.libertyfirewall.backendapi.model.Rule;
 

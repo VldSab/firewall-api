@@ -9,7 +9,6 @@ import ru.libertyfirewall.backendapi.enumeration.rules.Action;
 import ru.libertyfirewall.backendapi.enumeration.rules.Protocol;
 import ru.libertyfirewall.backendapi.model.Rule;
 import ru.libertyfirewall.backendapi.repository.RuleRepository;
-import ru.libertyfirewall.backendapi.util.AdditionalRuleParameters;
 
 @SpringBootApplication
 @AllArgsConstructor
@@ -32,7 +31,7 @@ public class BackendApiApplication {
 					"any",
 					null,
 					"any",
-					AdditionalRuleParameters.MESSAGE,
+					"()",
 					" "
 			));
 		};

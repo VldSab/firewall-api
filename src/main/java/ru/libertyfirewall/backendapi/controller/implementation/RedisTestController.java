@@ -1,4 +1,4 @@
-package ru.libertyfirewall.backendapi.controller;
+package ru.libertyfirewall.backendapi.controller.implementation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.ChannelTopic;

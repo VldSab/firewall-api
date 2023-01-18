@@ -1,4 +1,4 @@
-package ru.libertyfirewall.backendapi.util.rulecreators;
+package ru.libertyfirewall.backendapi.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,27 +22,31 @@ public class RuleCreator implements RulesCreator {
     private String parseRule(Rule rule) {
         final String SPACE = " ";
         final String ARROW = "->";
+        final String ANY = "any";
         String source;
         String destination;
         if (rule.getSrcIPs() == null) {
             GroupContainer group = groupRepository.getReferenceById(rule.getSrcGroupID());
             source = "[" + String.join(",", group.getContainer()) + "]";
         } else {
-            source = "[" + rule.getSrcIPs() + "]";
+            source = rule.getSrcIPs().equals(ANY) ? ANY : "[" + rule.getSrcIPs() + "]";
         }
 
         if (rule.getSrcIPs() == null) {
             GroupContainer group = groupRepository.getReferenceById(rule.getDstGroupID());
             destination = "[" + String.join(",", group.getContainer()) + "]";
         } else {
-            destination = "[" + rule.getDstIPs() + "]";
+            destination = rule.getDstIPs().equals(ANY) ? ANY : "[" + rule.getDstIPs() + "]";
         }
+
+        String srcPorts = rule.getSrcPorts().equals(ANY) ? ANY : "[" + rule.getSrcPorts() + "]";
+        String dstPorts = rule.getDstPorts().equals(ANY) ? ANY : "[" + rule.getDstPorts() + "]";
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(rule.getAction().getActionName()).append(SPACE)
-                .append(rule.getProtocol().getProtocolName()).append(SPACE)
-                .append(source).append(SPACE).append(rule.getSrcPorts()).append(SPACE)
-                .append(ARROW).append(SPACE).append(destination).append(SPACE).append(rule.getDstPorts());
+                .append(rule.getProtocol().getProtocolName()).append(SPACE).append(source)
+                .append(SPACE).append(srcPorts).append(SPACE).append(ARROW).append(SPACE)
+                .append(destination).append(SPACE).append(dstPorts).append(SPACE);
 
         if (rule.getAdditionalRuleParameters() != null) stringBuilder.append(rule.getAdditionalRuleParameters());
         return stringBuilder.toString();

@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.libertyfirewall.backendapi.enumeration.rules.Action;
 import ru.libertyfirewall.backendapi.enumeration.rules.Protocol;
-import ru.libertyfirewall.backendapi.util.AdditionalRuleParameters;
 
 import static jakarta.persistence.GenerationType.AUTO;
 
@@ -37,7 +36,7 @@ public class Rule {
     private Long dstGroupID;
     @NotEmpty(message = "Destination port address cannot be empty or null")
     private String dstPorts;
-    private AdditionalRuleParameters additionalRuleParameters;
+    private String additionalRuleParameters;
     private String comment;
 
 }

@@ -10,8 +10,8 @@ import ru.libertyfirewall.backendapi.model.Rule;
 import ru.libertyfirewall.backendapi.redis.RedisRulesPublisher;
 import ru.libertyfirewall.backendapi.repository.RuleRepository;
 import ru.libertyfirewall.backendapi.service.RuleService;
-import ru.libertyfirewall.backendapi.util.rulecreators.RuleCreator;
-import ru.libertyfirewall.backendapi.util.rulecreators.RulesStorage;
+import ru.libertyfirewall.backendapi.util.RuleCreator;
+import ru.libertyfirewall.backendapi.util.RulesStorage;
 
 import java.util.List;
 
