@@ -27,14 +27,14 @@ public class RuleCreator implements RulesCreator {
         String destination;
         if (rule.getSrcIPs() == null) {
             GroupContainer group = groupRepository.getReferenceById(rule.getSrcGroupID());
-            source = "[" + String.join(",", group.getContainer()) + "]";
+            source = "[" + String.join(", ", group.getContainer()) + "]";
         } else {
             source = rule.getSrcIPs().equals(ANY) ? ANY : "[" + rule.getSrcIPs() + "]";
         }
 
-        if (rule.getSrcIPs() == null) {
+        if (rule.getDstIPs() == null) {
             GroupContainer group = groupRepository.getReferenceById(rule.getDstGroupID());
-            destination = "[" + String.join(",", group.getContainer()) + "]";
+            destination = "[" + String.join(", ", group.getContainer()) + "]";
         } else {
             destination = rule.getDstIPs().equals(ANY) ? ANY : "[" + rule.getDstIPs() + "]";
         }
