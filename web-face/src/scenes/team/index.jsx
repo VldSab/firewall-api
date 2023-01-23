@@ -43,10 +43,10 @@ const Team = () => {
         return (
           <Box
             width="60%"
-            m="0 auto"
+            //m="0 auto"
             p="5px"
             display="flex"
-            justifyContent="center"
+            justifyContent="left"
             backgroundColor={
               access === "admin"
                 ? colors.greenAccent[600]
@@ -59,7 +59,7 @@ const Team = () => {
             {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
             {access === "manager" && <SecurityOutlinedIcon />}
             {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+            <Typography color={colors.grey[100]} sx={{ ml: "10px" }}>
               {access}
             </Typography>
           </Box>
