@@ -9,6 +9,7 @@ export const mockDataTeam = [
     phone: "(665)121-5454",
     access: "admin",
   },
+  
   {
     id: 2,
     name: "Cersei Lannister",
