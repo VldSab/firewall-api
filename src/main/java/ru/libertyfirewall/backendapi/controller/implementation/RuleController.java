@@ -16,6 +16,7 @@ import ru.libertyfirewall.backendapi.service.implementation.RuleServiceStandard;
 @RestController
 @RequestMapping("/rules")
 @RequiredArgsConstructor
+@CrossOrigin
 public class RuleController extends LibertyController {
     private final RuleServiceStandard ruleServiceStandard;
 

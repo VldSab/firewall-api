@@ -9,24 +9,30 @@ import java.time.LocalDateTime;
 public abstract class LibertyController {
     public ResponseEntity<Response> createResponse(HttpStatus status, String message, Object data) {
         if (status.equals(HttpStatus.OK))
-            return ResponseEntity.ok(
-                    Response.builder()
-                            .time(LocalDateTime.now())
-                            .message(message)
-                            .status(status)
-                            .statusCode(status.value())
-                            .data(data)
-                            .build()
+            return ResponseEntity.ok()
+                    .header("Access-Control-Allow-Credentials", "true")
+                    .body(
+                        Response.builder()
+                                .time(LocalDateTime.now())
+                                .message(message)
+                                .status(status)
+                                .statusCode(status.value())
+                                .data(data)
+                                .build()
             );
         if (status.equals(HttpStatus.BAD_REQUEST))
-            return ResponseEntity.badRequest().body(
+            return ResponseEntity.badRequest()
+                    .header("Access-Control-Allow-Credentials", "true")
+                    .body(
                     Response.builder()
                             .time(LocalDateTime.now())
                             .status(status)
                             .statusCode(status.value())
                             .build()
             );
-        return ResponseEntity.internalServerError().build();
+        return ResponseEntity.internalServerError()
+                .header("Access-Control-Allow-Credentials", "true")
+                .build();
     }
     public ResponseEntity<?> createRawResponse(HttpStatus status, Object data) {
         if (status.equals(HttpStatus.OK))

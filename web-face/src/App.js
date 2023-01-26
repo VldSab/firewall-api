@@ -4,12 +4,12 @@ import { Routes, Route } from "react-router-dom"
 import Topbar from "./scenes/global/Topbar"
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-import Team from "./scenes/team";
+import Policy from "./scenes/policy";
 import Groups from "./scenes/groups";
 // import Invoices from "./scenes/invoices";
 
 // import Bar from "./scenes/bar";
-// import Form from "./scenes/form";
+import Firewall from "./scenes/firewall";
 // import Line from "./scenes/line";
 // import Pie from "./scenes/pie";
 // import FAQ from "./scenes/fAQ";
@@ -29,10 +29,10 @@ function App() {
             <Topbar/>  
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/team" element={<Team />} />
+              <Route path="/policy" element={<Policy />} />
               <Route path="/groups" element={<Groups />} />
               {/* <Route path="/invoices" element={<Invoices />} /> */}
-              {/* <Route path="/form" element={<Form />} /> */}
+               <Route path="/firewall" element={<Firewall />} />
               {/* <Route path="/bar" element={<Bar />} /> */}
               {/* <Route path="/pie" element={<Pie />} /> */}
               {/* <Route path="/line" element={<Line />} />       */}

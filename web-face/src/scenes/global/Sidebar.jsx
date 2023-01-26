@@ -130,25 +130,25 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Data
+              Configuration
             </Typography>
             <Item
-              title="Manage Firewall"
-              to="/team"
+              title="Policy"
+              to="/policy"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Groups Information"
+              title="Groups"
               to="/groups"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Rulesets"
-              to="/invoices"
+              title="Firewall"
+              to="/firewall"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -159,17 +159,17 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              System
             </Typography>
             <Item
-              title="Profile Form"
+              title="Power"
               to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Calendar"
+              title="Services"
               to="/calendar"
               icon={<CalendarTodayOutlinedIcon />}
               selected={selected}

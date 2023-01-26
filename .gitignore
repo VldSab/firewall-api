@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+web-face/src/data
+web-face/src/data/mockData.js
+web-face/src/data/mockGeoFeatures.js
