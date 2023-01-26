@@ -34,7 +34,10 @@ const Firewall = () => {
       "srcPorts": values.sourcePorts,
       "dstIPs": values.destinationIPs,
       "dstPorts": values.destinationPorts
-    }))
+    }));
+
+
+    
   };
 
   return (
@@ -71,6 +74,7 @@ const Firewall = () => {
                 label="Method"
                 margin="normal"
                 variant="outlined"
+                disabled={false}
                 onChange={handleChange}
                 sx={{ gridColumn: "span 2" }}
               />
@@ -82,6 +86,7 @@ const Firewall = () => {
                 label="Protocol"
                 margin="normal"
                 variant="outlined"
+                disabled={false}
                 onChange={handleChange}
                 sx={{ gridColumn: "span 2" }}
               />
