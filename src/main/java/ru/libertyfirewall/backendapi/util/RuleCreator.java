@@ -25,22 +25,28 @@ public class RuleCreator implements RulesCreator {
         final String ANY = "any";
         String source;
         String destination;
+        String srcPorts;
+        String dstPorts;
+
         if (rule.getSrcIPs() == null) {
-            GroupContainer group = groupRepository.getReferenceById(rule.getSrcGroupID());
-            source = "[" + String.join(", ", group.getContainer()) + "]";
+            GroupContainer srcGroup = groupRepository.getReferenceById(rule.getSrcGroupID());
+            source = "[" + String.join(", ", srcGroup.getIpContainer()) + "]";
+            srcPorts = "[" + String.join(", ", srcGroup.getPortContainer()) + "]";
         } else {
             source = rule.getSrcIPs().equals(ANY) ? ANY : "[" + rule.getSrcIPs() + "]";
+            srcPorts = rule.getSrcPorts().equals(ANY) ? ANY : "[" + rule.getSrcPorts() + "]";
+
         }
 
         if (rule.getDstIPs() == null) {
-            GroupContainer group = groupRepository.getReferenceById(rule.getDstGroupID());
-            destination = "[" + String.join(", ", group.getContainer()) + "]";
+            GroupContainer dstGroup = groupRepository.getReferenceById(rule.getDstGroupID());
+            destination = "[" + String.join(", ", dstGroup.getIpContainer()) + "]";
+            dstPorts = "[" + String.join(", ", dstGroup.getPortContainer()) + "]";
         } else {
             destination = rule.getDstIPs().equals(ANY) ? ANY : "[" + rule.getDstIPs() + "]";
+            dstPorts = rule.getDstPorts().equals(ANY) ? ANY : "[" + rule.getDstPorts() + "]";
         }
 
-        String srcPorts = rule.getSrcPorts().equals(ANY) ? ANY : "[" + rule.getSrcPorts() + "]";
-        String dstPorts = rule.getDstPorts().equals(ANY) ? ANY : "[" + rule.getDstPorts() + "]";
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(rule.getAction().getActionName()).append(SPACE)

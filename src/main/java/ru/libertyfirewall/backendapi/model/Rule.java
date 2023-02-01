@@ -30,11 +30,9 @@ public class Rule {
     private Protocol protocol;
     private String srcIPs;
     private Long srcGroupID;
-    @NotEmpty(message = "Source port cannot be empty or null")
     private String srcPorts;
     private String dstIPs;
     private Long dstGroupID;
-    @NotEmpty(message = "Destination port address cannot be empty or null")
     private String dstPorts;
     private String additionalRuleParameters;
     private String comment;

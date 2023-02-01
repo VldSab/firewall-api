@@ -24,6 +24,8 @@ public class GroupContainer {
     @NotEmpty(message = "Name can not be empty")
     private String name;
     @ElementCollection
-    private Collection<String> container;
+    private Collection<String> ipContainer;
+    @ElementCollection
+    private Collection<String> portContainer;
     private String comment;
 }
