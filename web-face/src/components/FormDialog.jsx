@@ -33,129 +33,131 @@ const FormDialog = () => {
         ADD GROUP
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent></DialogContent>
-        <Header title="CREATE RULE" subtitle="Create a New Rule" />
-
-        <Formik
-          onSubmit={handleFormSubmit}
-          initialValues={initialValues}
-          validationSchema={checkoutSchema}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleBlur,
-            handleChange,
-            handleSubmit,
-          }) => (
-            <form onSubmit={handleSubmit}>
-              <Box
-                display="grid"
-                gap="30px"
-                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                sx={{
-                  "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                }}
-              >
-                <Field
-                  value={values.method}
-                  name="method"
-                  type="text"
-                  component={Methods}
-                  label="Method"
-                  margin="normal"
-                  variant="outlined"
-                  disabled={false}
-                  onChange={handleChange}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <Field
-                  value={values.protocol}
-                  name="protocol"
-                  type="text"
-                  component={Protocols}
-                  label="Protocol"
-                  margin="normal"
-                  variant="outlined"
-                  disabled={false}
-                  onChange={handleChange}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Source IPs"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.sourceIPs}
-                  name="sourceIPs"
-                  error={!!touched.sourceIPs && !!errors.sourceIPs}
-                  helperText={touched.sourceIPs && errors.sourceIPs}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Source Ports"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.sourcePorts}
-                  name="sourcePorts"
-                  error={!!touched.sourcePorts && !!errors.sourcePorts}
-                  helperText={touched.sourcePorts && errors.sourcePorts}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Destination IPs"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.destinationIPs}
-                  name="destinationIPs"
-                  error={!!touched.destinationIPs && !!errors.destinationIPs}
-                  helperText={touched.destinationIPs && errors.destinationIPs}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Destination Ports"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.destinationPorts}
-                  name="destinationPorts"
-                  error={
-                    !!touched.destinationPorts && !!errors.destinationPorts
-                  }
-                  helperText={
-                    touched.destinationPorts && errors.destinationPorts
-                  }
-                  sx={{ gridColumn: "span 2" }}
-                />
-              </Box>
-              <Box display="flex" justifyContent="center" mt="40px">
-                <Button
-                  type="submit"
-                  color="secondary"
-                  variant="contained"
-                  sx={{ width: "25%", height: "100%" }}
+        <DialogTitle>Create rule</DialogTitle>
+        <DialogContent>
+          Create a New Rule
+          <Formik
+            onSubmit={handleFormSubmit}
+            initialValues={initialValues}
+            validationSchema={checkoutSchema}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <Box
+                  display="grid"
+                  gap="30px"
+                  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                  sx={{
+                    "& > div": {
+                      gridColumn: isNonMobile ? undefined : "span 4",
+                    },
+                  }}
                 >
-                  Create New Rule
-                </Button>
-              </Box>
-            </form>
-          )}
-        </Formik>
+                  <Field
+                    value={values.method}
+                    name="method"
+                    type="text"
+                    component={Methods}
+                    label="Method"
+                    margin="normal"
+                    variant="outlined"
+                    disabled={false}
+                    onChange={handleChange}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <Field
+                    value={values.protocol}
+                    name="protocol"
+                    type="text"
+                    component={Protocols}
+                    label="Protocol"
+                    margin="normal"
+                    variant="outlined"
+                    disabled={false}
+                    onChange={handleChange}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Source IPs"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.sourceIPs}
+                    name="sourceIPs"
+                    error={!!touched.sourceIPs && !!errors.sourceIPs}
+                    helperText={touched.sourceIPs && errors.sourceIPs}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Source Ports"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.sourcePorts}
+                    name="sourcePorts"
+                    error={!!touched.sourcePorts && !!errors.sourcePorts}
+                    helperText={touched.sourcePorts && errors.sourcePorts}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Destination IPs"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.destinationIPs}
+                    name="destinationIPs"
+                    error={!!touched.destinationIPs && !!errors.destinationIPs}
+                    helperText={touched.destinationIPs && errors.destinationIPs}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Destination Ports"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.destinationPorts}
+                    name="destinationPorts"
+                    error={
+                      !!touched.destinationPorts && !!errors.destinationPorts
+                    }
+                    helperText={
+                      touched.destinationPorts && errors.destinationPorts
+                    }
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                </Box>
+                <Box display="flex" justifyContent="center" mt="40px">
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    sx={{ width: "25%", height: "100%" }}
+                  >
+                    Create
+                  </Button>
+                </Box>
+              </form>
+            )}
+          </Formik>
+        </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose} color="secondary">Cancel</Button>
+          <Button onClick={handleClose} color="secondary">Ok</Button>
         </DialogActions>
       </Dialog>
     </Box>
