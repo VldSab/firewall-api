@@ -8,10 +8,12 @@ import { Box, Button, TextField } from "@mui/material";
 import { Formik, Field } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../components/Header";
-import Methods from "../components/Methods";
-import Protocols from "../components/Protocols";
-import { ExposureOutlined } from "@mui/icons-material";
+import GroupType from "./util/GroupType";
+import {
+  mockDataGroups,
+  appendMockDataGroups,
+  setMockDataGroups,
+} from "../data/mockData";
 
 const FormDialog = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -25,14 +27,30 @@ const FormDialog = () => {
     setOpen(false);
   };
 
-  const handleFormSubmit = (values) => {};
+  const handleFormSubmit = (values) => {
+    const newId = mockDataGroups[mockDataGroups.length - 1].id + 1;
+    const newRow = [
+      {
+        id: newId,
+        name: values.groupName,
+        container: [values.sourceIPs],
+      },
+    ];
+    var newMock = newRow.concat(mockDataGroups);
+    setMockDataGroups(newMock);
+    console.log(JSON.stringify(mockDataGroups));
+  };
 
   return (
     <Box>
       <Button variant="outlined" onClick={handleClickOpen} color="secondary">
         ADD GROUP
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{ sx: { width: "20%", height: "50%" } }}
+      >
         <DialogTitle>Create rule</DialogTitle>
         <DialogContent>
           Create a New Rule
@@ -64,81 +82,58 @@ const FormDialog = () => {
                     value={values.method}
                     name="method"
                     type="text"
-                    component={Methods}
+                    component={GroupType}
                     label="Method"
                     margin="normal"
                     variant="outlined"
                     disabled={false}
                     onChange={handleChange}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <Field
-                    value={values.protocol}
-                    name="protocol"
-                    type="text"
-                    component={Protocols}
-                    label="Protocol"
-                    margin="normal"
-                    variant="outlined"
-                    disabled={false}
-                    onChange={handleChange}
-                    sx={{ gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 4" }}
                   />
                   <TextField
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Source IPs"
+                    label="Group name"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.groupName}
+                    name="groupName"
+                    error={!!touched.groupName && !!errors.groupName}
+                    helperText={touched.groupName && errors.groupName}
+                    sx={{ gridColumn: "span 4" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="IPs"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.sourceIPs}
                     name="sourceIPs"
+                    style={{
+                      display: values.method === "Ports" ? "none" : "block",
+                    }}
                     error={!!touched.sourceIPs && !!errors.sourceIPs}
                     helperText={touched.sourceIPs && errors.sourceIPs}
-                    sx={{ gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 4" }}
                   />
                   <TextField
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Source Ports"
+                    label="Ports"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.sourcePorts}
                     name="sourcePorts"
+                    style={{
+                      display: values.method === "IPs" ? "none" : "block",
+                    }}
                     error={!!touched.sourcePorts && !!errors.sourcePorts}
                     helperText={touched.sourcePorts && errors.sourcePorts}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Destination IPs"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.destinationIPs}
-                    name="destinationIPs"
-                    error={!!touched.destinationIPs && !!errors.destinationIPs}
-                    helperText={touched.destinationIPs && errors.destinationIPs}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Destination Ports"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.destinationPorts}
-                    name="destinationPorts"
-                    error={
-                      !!touched.destinationPorts && !!errors.destinationPorts
-                    }
-                    helperText={
-                      touched.destinationPorts && errors.destinationPorts
-                    }
-                    sx={{ gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 4" }}
                   />
                 </Box>
                 <Box display="flex" justifyContent="center" mt="40px">
@@ -156,8 +151,12 @@ const FormDialog = () => {
           </Formik>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">Cancel</Button>
-          <Button onClick={handleClose} color="secondary">Ok</Button>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="secondary">
+            Ok
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
@@ -165,20 +164,16 @@ const FormDialog = () => {
 };
 
 const checkoutSchema = yup.object().shape({
-  method: yup.string().required("required"),
-  protocol: yup.string().required("required"),
-  sourceIPs: yup.string().required("required"),
-  sourcePorts: yup.string().required("required"),
-  destinationIPs: yup.string().required("required"),
-  destinationPorts: yup.string().required("required"),
+  groupName: yup.string(),
+  method: yup.string(),
+  sourcePorts: yup.string(),
+  sourceIPs: yup.string(),
 });
 const initialValues = {
+  groupName: "",
   method: "",
-  protocol: "",
-  sourceIPs: "",
   sourcePorts: "",
-  destinationIPs: "",
-  destinationPorts: "",
+  sourceIPs: "",
 };
 
 export default FormDialog;

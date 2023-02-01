@@ -1,14 +1,17 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../theme";
-import { mockDataGroups } from "../../data/mockData";
+import { mockDataGroups, getMockDataGroups, mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import { forceUppdate, useEffect, useState } from "react";
 import FormDialog from "../../components/FormDialog";
 
 const Groups = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const data = mockDataGroups
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
@@ -30,13 +33,16 @@ const Groups = () => {
     }
   ];
 
+
   return (
     <Box m="20px">
       <Header
         title="GROUPS"
         subtitle="List of Groups"
       />
-      <FormDialog />
+      <FormDialog>
+      </FormDialog>
+      
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -71,7 +77,7 @@ const Groups = () => {
       >
         <DataGrid
           checkboxSelection
-          rows={mockDataGroups}
+          rows={data}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

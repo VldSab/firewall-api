@@ -3,8 +3,8 @@ import { Formik, Field } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import Methods from "../../components/Methods";
-import Protocols from "../../components/Protocols";
+import Methods from "../../components/util/Methods";
+import Protocols from "../../components/util/Protocols";
 
 
 
