@@ -2,17 +2,30 @@ import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import { mockDataGroups, getMockDataGroups, mockDataContacts } from "../../data/mockData";
+import { groups } from "../../data/GroupsData"
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { forceUppdate, useEffect, useState } from "react";
 import FormDialog from "../../components/FormDialog";
+import { array } from "yup";
 
 const Groups = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const data = mockDataGroups
+  var response = groups()
+  var data = JSON.parse(response).data
+  // for (var elem in data) {
+  //   console.log(elem)
+  // }
 
+  console.log("Data.data ", data)
+  // for(var i in data) {
+  //   newData.push([i, data.data[i]]);
+  // }    
+
+
+  
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
     {
@@ -22,8 +35,13 @@ const Groups = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "container",
-      headerName: "Container",
+      field: "ipContainer",
+      headerName: "IP Container",
+      flex: 1,
+    },
+    {
+      field: "portContainer",
+      headerName: "Port Container",
       flex: 1,
     },
     {

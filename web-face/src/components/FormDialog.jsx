@@ -14,6 +14,7 @@ import {
   appendMockDataGroups,
   setMockDataGroups,
 } from "../data/mockData";
+import { sendGroup } from "../data/GroupsData"
 
 const FormDialog = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -25,8 +26,10 @@ const FormDialog = () => {
 
   const handleClose = () => {
     setOpen(false);
+    window.location.reload(false);
   };
 
+  //костыльный костыль
   const handleFormSubmit = (values) => {
     const newId = mockDataGroups[mockDataGroups.length - 1].id + 1;
     const newRow = [
@@ -39,6 +42,7 @@ const FormDialog = () => {
     var newMock = newRow.concat(mockDataGroups);
     setMockDataGroups(newMock);
     console.log(JSON.stringify(mockDataGroups));
+    sendGroup(values.groupName, [values.sourceIPs], null, null);
   };
 
   return (
