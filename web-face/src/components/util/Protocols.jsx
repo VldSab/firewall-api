@@ -7,7 +7,7 @@ const Protocols = (props) => {
 
     useEffect(() => {
         const loadData = () => {
-            setProtocols(["TCP", "UDP", "HTTP", "FTP", "SSH"])
+            setProtocols(["TCP", "IP", "UDP", "HTTP", "FTP", "SSH"])
         }
         loadData();
     }, []);
