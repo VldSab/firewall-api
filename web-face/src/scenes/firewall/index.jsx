@@ -82,6 +82,7 @@ const Firewall = () => {
               }}
             >
               <Field
+                values={values.mode}
                 value={values.mode}
                 name="mode"
                 type="text"

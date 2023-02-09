@@ -10,6 +10,7 @@ public enum Protocol {
     FTP("ftp"),
     TLS("tls"),
     DNS("dns"),
+    IP("ip"),
     SSH("ssh");
 
     private final String protocolName;

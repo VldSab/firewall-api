@@ -1,35 +1,55 @@
-import { MenuItem, Box } from "@mui/material";
-import { TextField, Select } from 'formik-mui';
-import { useEffect, useState } from "react";
-const Modes = (props) => {
-
-    const [modes, setModes] = useState([]);
-
-    useEffect(() => {
-        const loadData = () => {
-            setModes(["USE GROUPS", "CREATE SINGLE RULE"])
-        }
-        loadData();
-    }, []);
-
+const json = {
+    question: 'Do you support cookies in cakes?',
+    choices:
+    [
+      { text: 'Yes', value: '1' },
+      { text: 'No', value: '2' }
+    ]
+  }
+  
+  const PollOption = ({ options, selected, onChange }) => {
     return (
-        <TextField 
-            select
-            {...props}
-        >
-            
-            {modes.length ?
-                modes.map((mode) => (
-                    <MenuItem key={mode} value={mode}>
-                        {mode}
-                    </MenuItem>
-                ))
-                :
-                <MenuItem>loading...</MenuItem>
-            }
-        </TextField >
+      <div className="pollOption">
+        {options.map((choice, index) => (
+          <label key={index}>
+            <input type="radio"
+              name="vote"
+              value={choice.value}
+              key={index}
+              checked={selected === choice.value}
+              onChange={onChange} />
+            {choice.text}
+          </label>
+        ))}
+      </div>
     );
-
-};
-
-export default Modes;
+  };
+  
+  class OpinionPoll extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { selectedOption: '' }
+    }
+  
+    handleClick() {
+      console.log('submitted option', this.state.selectedOption);
+    }
+  
+    handleOnChange(e) {
+      console.log('selected option', e.target.value);
+      this.setState({ selectedOption: e.target.value});
+    }
+  
+    render() {
+      return (
+        <div className="poll">
+          {this.props.model.question}
+          <PollOption
+            options={this.props.model.choices}
+            onChange={(e) => this.handleOnChange(e)}
+            selected={this.state.selectedOption} />
+          <button onClick={() => this.handleClick()}>Vote!</button>
+        </div>
+      );
+    }
+  }
