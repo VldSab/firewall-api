@@ -16,6 +16,7 @@ import ru.libertyfirewall.backendapi.service.implementation.GroupServiceStandard
 @Controller
 @RequestMapping("/groups")
 @RequiredArgsConstructor
+@CrossOrigin
 public class GroupController extends LibertyController {
 
     private final GroupServiceStandard groupServiceStandard;
@@ -76,6 +77,11 @@ public class GroupController extends LibertyController {
     @GetMapping
     public ResponseEntity<Response> getGroups() {
         return createResponse(HttpStatus.OK, "Группы получены", groupServiceStandard.list());
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<Response> getGroupsByName(@PathVariable String name) throws NoSuchGroupExeption {
+        return createResponse(HttpStatus.OK, "Группа получена", groupServiceStandard.getByName(name));
     }
 
 }

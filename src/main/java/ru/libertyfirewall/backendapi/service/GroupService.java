@@ -9,5 +9,6 @@ public interface GroupService {
     GroupContainer create(GroupContainer group);
     boolean delete(Long id) throws NoSuchGroupExeption;
     boolean delete(String name) throws NoSuchGroupExeption;
+    GroupContainer getByName(String name) throws NoSuchGroupExeption;
     List<GroupContainer> list();
 }

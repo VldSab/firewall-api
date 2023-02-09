@@ -37,12 +37,21 @@ public class GroupServiceStandard implements GroupService {
 
     @Override
     public boolean delete(String name) throws NoSuchGroupExeption {
-        log.info("Deleting group with id {}", name);
+        log.info("Deleting group with name {}", name);
         if (groupRepository.findByName(name).isEmpty()) {
-            throw new NoSuchGroupExeption("No group with such ID");
+            throw new NoSuchGroupExeption("No group with such name");
         }
         groupRepository.deleteByName(name);
         return true;
+    }
+
+    @Override
+    public GroupContainer getByName(String name) throws NoSuchGroupExeption {
+        log.info("Getting group with name {}", name);
+        if (groupRepository.findByName(name).isEmpty()) {
+            throw new NoSuchGroupExeption("No group with such name");
+        }
+        return groupRepository.findByName(name).get();
     }
 
     @Override
