@@ -9,11 +9,6 @@ import { Formik, Field } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import GroupType from "./util/GroupType";
-import {
-  mockDataGroups,
-  appendMockDataGroups,
-  setMockDataGroups,
-} from "../data/mockData";
 import { sendGroup } from "../data/GroupsData"
 
 const FormDialog = () => {
@@ -29,21 +24,14 @@ const FormDialog = () => {
     window.location.reload(false);
   };
 
-  //костыльный костыль
   const handleFormSubmit = (values) => {
-    const newId = mockDataGroups[mockDataGroups.length - 1].id + 1;
-    const newRow = [
-      {
-        id: newId,
-        name: values.groupName,
-        container: [values.sourceIPs],
-      },
-    ];
-    var newMock = newRow.concat(mockDataGroups);
-    setMockDataGroups(newMock);
-    console.log(JSON.stringify(mockDataGroups));
-    sendGroup(values.groupName, [values.sourceIPs], null, null);
+    sendGroup(values.groupName, [values.sourceIPs], [values.sourcePorts], null);
   };
+
+  const handleCloseSubmit = (values) => {
+    handleFormSubmit(values);
+    handleClose();
+  }
 
   return (
     <Box>
@@ -53,13 +41,13 @@ const FormDialog = () => {
       <Dialog
         open={open}
         onClose={handleClose}
-        PaperProps={{ sx: { width: "20%", height: "50%" } }}
+        PaperProps={{ sx: { width: "20%", height: "60%" } }}
       >
-        <DialogTitle>Create rule</DialogTitle>
+        <DialogTitle>Create group</DialogTitle>
         <DialogContent>
-          Create a New Rule
+          Create a New Group
           <Formik
-            onSubmit={handleFormSubmit}
+            onSubmit={handleCloseSubmit}
             initialValues={initialValues}
             validationSchema={checkoutSchema}
           >
@@ -140,7 +128,7 @@ const FormDialog = () => {
                     sx={{ gridColumn: "span 4" }}
                   />
                 </Box>
-                <Box display="flex" justifyContent="center" mt="40px">
+                <Box  display="flex" justifyContent="center" mt="40px" >
                   <Button
                     type="submit"
                     color="secondary"
@@ -154,14 +142,14 @@ const FormDialog = () => {
             )}
           </Formik>
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={handleCloseSubmit} color="secondary">
             Ok
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </Box>
   );

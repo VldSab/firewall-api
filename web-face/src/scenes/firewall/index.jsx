@@ -5,39 +5,54 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import Methods from "../../components/util/Methods";
 import Protocols from "../../components/util/Protocols";
-
-
+import Modes from "../../components/util/Modes";
+import Groups from "../../components/util/Groups";
+import { getGroupIdByName } from "../../data/GroupsData";
 
 const Firewall = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  
+
   const handleFormSubmit = (values) => {
-    fetch('http://localhost:8080/rules', {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              "action": values.method,
-              "protocol": values.protocol,
-              "srcIPs": values.sourceIPs,
-              "srcPorts": values.sourcePorts,
-              "dstIPs": values.destinationIPs,
-              "dstPorts": values.destinationPorts
-            })
-    })
-    .then(response => console.log(JSON.stringify(response)))
-    .then(JSON.stringify({
-      "action": values.method,
-      "protocol": values.protocol,
-      "srcIPs": values.sourceIPs,
-      "srcPorts": values.sourcePorts,
-      "dstIPs": values.destinationIPs,
-      "dstPorts": values.destinationPorts
-    }));
-
-
+    var body;
     
+    if (values.mode === "CREATE SINGLE RULE") {
+      body = JSON.stringify({
+        action: values.method,
+        protocol: values.protocol,
+        srcIPs: values.sourceIPs,
+        srcPorts: values.sourcePorts,
+        dstIPs: values.destinationIPs,
+        dstPorts: values.destinationPorts,
+      });
+    } else {
+      var srcGroupID = getGroupIdByName(values.srcGroup);
+      var dstGroupID = getGroupIdByName(values.dstGroup)
+      body = JSON.stringify({ 
+        action: values.method,
+        protocol: values.protocol,
+        srcGroupID: srcGroupID,
+        dstGroupID: dstGroupID,
+      })
+    }
+
+    fetch("http://localhost:8080/rules", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: body,
+    })
+      .then((response) => console.log(JSON.stringify(response)))
+      .then(
+        JSON.stringify({
+          action: values.method,
+          protocol: values.protocol,
+          srcIPs: values.sourceIPs,
+          srcPorts: values.sourcePorts,
+          dstIPs: values.destinationIPs,
+          dstPorts: values.destinationPorts,
+        })
+      );
   };
 
   return (
@@ -67,6 +82,18 @@ const Firewall = () => {
               }}
             >
               <Field
+                value={values.mode}
+                name="mode"
+                type="text"
+                component={Modes}
+                label="Mode"
+                margin="normal"
+                variant="outlined"
+                disabled={false}
+                onChange={handleChange}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <Field
                 value={values.method}
                 name="method"
                 type="text"
@@ -90,6 +117,35 @@ const Firewall = () => {
                 onChange={handleChange}
                 sx={{ gridColumn: "span 2" }}
               />
+              {values.mode === "USE GROUPS" ? (
+                <Field
+                  value={values.srcGroup}
+                  name="srcGroup"
+                  type="text"
+                  component={Groups}
+                  label="Source Group"
+                  margin="normal"
+                  variant="outlined"
+                  disabled={false}
+                  onChange={handleChange}
+                  sx={{ gridColumn: "span 2" }}
+                />
+              ) : null}
+              {values.mode === "USE GROUPS" ? (
+                <Field
+                  value={values.dstGroup}
+                  name="dstGroup"
+                  type="text"
+                  component={Groups}
+                  label="Destination Group"
+                  margin="normal"
+                  variant="outlined"
+                  disabled={false}
+                  onChange={handleChange}
+                  sx={{ gridColumn: "span 2" }}
+                />
+              ) : null}
+              {values.mode === "CREATE SINGLE RULE" ? (
               <TextField
                 fullWidth
                 variant="filled"
@@ -103,19 +159,8 @@ const Firewall = () => {
                 helperText={touched.sourceIPs && errors.sourceIPs}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Source Ports"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.sourcePorts}
-                name="sourcePorts"
-                error={!!touched.sourcePorts && !!errors.sourcePorts}
-                helperText={touched.sourcePorts && errors.sourcePorts}
-                sx={{ gridColumn: "span 2" }}
-              />
+              ) : null}
+              {values.mode === "CREATE SINGLE RULE" ? (
               <TextField
                 fullWidth
                 variant="filled"
@@ -129,6 +174,24 @@ const Firewall = () => {
                 helperText={touched.destinationIPs && errors.destinationIPs}
                 sx={{ gridColumn: "span 2" }}
               />
+              ) : null}
+              {values.mode === "CREATE SINGLE RULE" ? (
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Source Ports"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.sourcePorts}
+                name="sourcePorts"
+                error={!!touched.sourcePorts && !!errors.sourcePorts}
+                helperText={touched.sourcePorts && errors.sourcePorts}
+                sx={{ gridColumn: "span 2" }}
+              />
+              ) : null}
+              
+              {values.mode === "CREATE SINGLE RULE" ? (
               <TextField
                 fullWidth
                 variant="filled"
@@ -142,6 +205,7 @@ const Firewall = () => {
                 helperText={touched.destinationPorts && errors.destinationPorts}
                 sx={{ gridColumn: "span 2" }}
               />
+              ) : null}
             </Box>
             <Box display="flex" justifyContent="center" mt="40px">
               <Button
@@ -161,14 +225,20 @@ const Firewall = () => {
 };
 
 const checkoutSchema = yup.object().shape({
-  method: yup.string().required("required"),
-  protocol: yup.string().required("required"),
-  sourceIPs: yup.string().required("required"),
-  sourcePorts: yup.string().required("required"),
-  destinationIPs: yup.string().required("required"),
-  destinationPorts: yup.string().required("required"),
+  mode: yup.string(),
+  srcGroup: yup.string(),
+  dstGroup: yup.string(),
+  method: yup.string(),
+  protocol: yup.string(),
+  sourceIPs: yup.string(),
+  sourcePorts: yup.string(),
+  destinationIPs: yup.string(),
+  destinationPorts: yup.string(),
 });
 const initialValues = {
+  mode: "",
+  srcGroup: "",
+  dstGroup: "",
   method: "",
   protocol: "",
   sourceIPs: "",
