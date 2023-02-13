@@ -29,7 +29,7 @@ public class GroupServiceStandard implements GroupService {
     public boolean delete(Long id) throws NoSuchGroupException {
         log.info("Deleting group with id {}", id);
         if (groupRepository.findById(id).isEmpty()) {
-            throw new NoSuchGroupException("No group with such ID");
+            throw new NoSuchGroupException("Нет группы с таким ID");
         }
         groupRepository.deleteById(id);
         return true;
@@ -39,7 +39,7 @@ public class GroupServiceStandard implements GroupService {
     public boolean delete(String name) throws NoSuchGroupException {
         log.info("Deleting group with name {}", name);
         if (groupRepository.findByName(name).isEmpty()) {
-            throw new NoSuchGroupException("No group with such name");
+            throw new NoSuchGroupException("Нет группы с таким именем");
         }
         groupRepository.deleteByName(name);
         return true;
@@ -49,7 +49,7 @@ public class GroupServiceStandard implements GroupService {
     public GroupContainer getByName(String name) throws NoSuchGroupException {
         log.info("Getting group with name {}", name);
         if (groupRepository.findByName(name).isEmpty()) {
-            throw new NoSuchGroupException("No group with such name");
+            throw new NoSuchGroupException("Нет группы с таким именем");
         }
         return groupRepository.findByName(name).get();
     }
