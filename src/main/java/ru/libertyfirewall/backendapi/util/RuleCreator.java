@@ -27,6 +27,7 @@ public class RuleCreator implements RulesCreator {
         String destination;
         String srcPorts;
         String dstPorts;
+        String sid;
 
         if (rule.getSrcIPs() == null) {
             GroupContainer srcGroup = groupRepository.getReferenceById(rule.getSrcGroupID());
@@ -47,12 +48,13 @@ public class RuleCreator implements RulesCreator {
             dstPorts = rule.getDstPorts().equals(ANY) ? ANY : "[" + rule.getDstPorts() + "]";
         }
 
+        sid = "(sid: " + rule.getId().toString() + ";)";
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(rule.getAction().getActionName()).append(SPACE)
                 .append(rule.getProtocol().getProtocolName()).append(SPACE).append(source)
                 .append(SPACE).append(srcPorts).append(SPACE).append(ARROW).append(SPACE)
-                .append(destination).append(SPACE).append(dstPorts).append(SPACE);
+                .append(destination).append(SPACE).append(dstPorts).append(SPACE).append(sid);
 
         if (rule.getAdditionalRuleParameters() != null) stringBuilder.append(rule.getAdditionalRuleParameters());
         return stringBuilder.toString();

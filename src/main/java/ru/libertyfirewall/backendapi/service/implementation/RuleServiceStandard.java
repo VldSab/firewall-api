@@ -33,14 +33,15 @@ public class RuleServiceStandard implements RuleService {
         log.info("Saving new rule");
         if (!isValidRule(rule))
             throw new ValidationException("Неверно указаны ip-адреса или ID групп.");
+        Rule ruleSaved = ruleRepository.save(rule);
         // парсинг правила
-        RulesStorage rulesStorage = ruleCreator.createRules(rule);
-        // отправление в
+        RulesStorage rulesStorage = ruleCreator.createRules(ruleSaved);
+        // отправление в редис
         for (String parsedRule: rulesStorage.getRulesStorage()) {
             rulesPublisher.publish(parsedRule);
             log.info("Rules publisher topic {}", rulesPublisher);
         }
-        return ruleRepository.save(rule);
+        return ruleSaved;
     }
 
     @Override

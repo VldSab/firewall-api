@@ -18,23 +18,4 @@ public class BackendApiApplication {
 		SpringApplication.run(BackendApiApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner run(RuleRepository ruleRepository) {
-		return args -> {
-			ruleRepository.save(new Rule(
-					null,
-					Action.ALERT,
-					Protocol.TCP,
-					"any",
-					null,
-					"80",
-					"any",
-					null,
-					"any",
-					"()",
-					" "
-			));
-		};
-	}
-
 }
