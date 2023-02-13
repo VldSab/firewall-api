@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.libertyfirewall.backendapi.exeptions.group.NoSuchGroupExeption;
+import ru.libertyfirewall.backendapi.exeptions.group.NoSuchGroupException;
 import ru.libertyfirewall.backendapi.model.GroupContainer;
 import ru.libertyfirewall.backendapi.repository.GroupRepository;
 import ru.libertyfirewall.backendapi.service.GroupService;
@@ -26,30 +26,30 @@ public class GroupServiceStandard implements GroupService {
     }
 
     @Override
-    public boolean delete(Long id) throws NoSuchGroupExeption {
+    public boolean delete(Long id) throws NoSuchGroupException {
         log.info("Deleting group with id {}", id);
         if (groupRepository.findById(id).isEmpty()) {
-            throw new NoSuchGroupExeption("No group with such ID");
+            throw new NoSuchGroupException("No group with such ID");
         }
         groupRepository.deleteById(id);
         return true;
     }
 
     @Override
-    public boolean delete(String name) throws NoSuchGroupExeption {
+    public boolean delete(String name) throws NoSuchGroupException {
         log.info("Deleting group with name {}", name);
         if (groupRepository.findByName(name).isEmpty()) {
-            throw new NoSuchGroupExeption("No group with such name");
+            throw new NoSuchGroupException("No group with such name");
         }
         groupRepository.deleteByName(name);
         return true;
     }
 
     @Override
-    public GroupContainer getByName(String name) throws NoSuchGroupExeption {
+    public GroupContainer getByName(String name) throws NoSuchGroupException {
         log.info("Getting group with name {}", name);
         if (groupRepository.findByName(name).isEmpty()) {
-            throw new NoSuchGroupExeption("No group with such name");
+            throw new NoSuchGroupException("No group with such name");
         }
         return groupRepository.findByName(name).get();
     }

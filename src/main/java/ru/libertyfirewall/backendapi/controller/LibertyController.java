@@ -2,9 +2,16 @@ package ru.libertyfirewall.backendapi.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.libertyfirewall.backendapi.exeptions.NotFoundException;
+import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.model.Response;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public abstract class LibertyController {
     public ResponseEntity<Response> createResponse(HttpStatus status, String message, Object data) {
@@ -55,4 +62,49 @@ public abstract class LibertyController {
             );
         return ResponseEntity.internalServerError().build();
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleNull(final NullPointerException e) {
+        return Map.of(
+                "error", "Не передан параметр",
+                "message", e.getMessage(),
+                "status", HttpStatus.BAD_REQUEST.toString(),
+                "statusCode", String.valueOf(HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleBadValidation(final ValidationException e) {
+        return Map.of(
+                "error", "Ошибка валидации",
+                "message", e.getMessage(),
+                "status", HttpStatus.BAD_REQUEST.toString(),
+                "statusCode", String.valueOf(HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleWrongResource(final NotFoundException e) {
+        return Map.of(
+                "error", "Ресурс не найден",
+                "message", e.getMessage(),
+                "status", HttpStatus.NOT_FOUND.toString(),
+                "statusCode", String.valueOf(HttpStatus.NOT_FOUND.value())
+        );
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleWrongArguments(final Exception e) {
+        return Map.of(
+                "error", "Не все аргументы переданы, либо переданы с ошибкой",
+                "message", e.getMessage(),
+                "status", HttpStatus.BAD_REQUEST.toString(),
+                "statusCode", String.valueOf(HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
 }
