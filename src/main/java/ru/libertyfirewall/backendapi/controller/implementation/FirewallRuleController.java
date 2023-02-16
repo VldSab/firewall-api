@@ -9,30 +9,30 @@ import ru.libertyfirewall.backendapi.controller.LibertyController;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleException;
 import ru.libertyfirewall.backendapi.model.Response;
-import ru.libertyfirewall.backendapi.model.Rule;
-import ru.libertyfirewall.backendapi.service.implementation.RuleServiceStandard;
+import ru.libertyfirewall.backendapi.model.FirewallRule;
+import ru.libertyfirewall.backendapi.service.implementation.FirewallRuleService;
 
 
 @RestController
 @RequestMapping("/rules")
 @RequiredArgsConstructor
 @CrossOrigin
-public class RuleController extends LibertyController {
-    private final RuleServiceStandard ruleServiceStandard;
+public class FirewallRuleController extends LibertyController {
+    private final FirewallRuleService firewallRuleService;
 
     @PostMapping
-    public ResponseEntity<Response> saveRule(@RequestBody @Valid Rule rule) throws ValidationException {
-        return createResponse(HttpStatus.OK, "Правило создано", ruleServiceStandard.create(rule));
+    public ResponseEntity<Response> saveRule(@RequestBody @Valid FirewallRule firewallRule) throws ValidationException {
+        return createResponse(HttpStatus.OK, "Правило создано", firewallRuleService.create(firewallRule));
     }
 
     @DeleteMapping("/id/{id}")
     public ResponseEntity<Response> deleteRule(@PathVariable("id") Long id) throws NoSuchRuleException {
-        return createResponse(HttpStatus.OK, "Правило удалено", ruleServiceStandard.delete(id));
+        return createResponse(HttpStatus.OK, "Правило удалено", firewallRuleService.delete(id));
     }
 
     @GetMapping
     public ResponseEntity<Response> getRules() {
-        return createResponse(HttpStatus.OK, "Правила получены", ruleServiceStandard.list());
+        return createResponse(HttpStatus.OK, "Правила получены", firewallRuleService.list());
     }
 
 

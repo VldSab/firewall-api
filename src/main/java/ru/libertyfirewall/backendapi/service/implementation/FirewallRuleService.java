@@ -6,11 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleException;
-import ru.libertyfirewall.backendapi.model.Rule;
+import ru.libertyfirewall.backendapi.model.FirewallRule;
 import ru.libertyfirewall.backendapi.redis.RedisRulesPublisher;
 import ru.libertyfirewall.backendapi.repository.RuleRepository;
 import ru.libertyfirewall.backendapi.service.RuleService;
-import ru.libertyfirewall.backendapi.util.RuleCreator;
+import ru.libertyfirewall.backendapi.util.FirewallRuleCreator;
 import ru.libertyfirewall.backendapi.util.RulesStorage;
 
 import java.util.List;
@@ -19,29 +19,29 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class RuleServiceStandard implements RuleService {
+public class FirewallRuleService implements RuleService<FirewallRule> {
     /**
      * Управление правилами сурикаты.
      */
     private final RuleRepository ruleRepository;
     private final RedisRulesPublisher rulesPublisher;
 
-    private final RuleCreator ruleCreator;
+    private final FirewallRuleCreator firewallRuleCreator;
 
     @Override
-    public Rule create(Rule rule) throws ValidationException {
+    public FirewallRule create(FirewallRule firewallRule) throws ValidationException {
         log.info("Saving new rule");
-        if (!isValidRule(rule))
+        if (!isValidRule(firewallRule))
             throw new ValidationException("Неверно указаны ip-адреса или ID групп.");
-        Rule ruleSaved = ruleRepository.save(rule);
+        FirewallRule firewallRuleSaved = ruleRepository.save(firewallRule);
         // парсинг правила
-        RulesStorage rulesStorage = ruleCreator.createRules(ruleSaved);
+        RulesStorage rulesStorage = firewallRuleCreator.createRules(firewallRuleSaved);
         // отправление в редис
         for (String parsedRule: rulesStorage.getRulesStorage()) {
             rulesPublisher.publish(parsedRule);
             log.info("Rules publisher topic {}", rulesPublisher);
         }
-        return ruleSaved;
+        return firewallRuleSaved;
     }
 
     @Override
@@ -55,14 +55,14 @@ public class RuleServiceStandard implements RuleService {
     }
 
     @Override
-    public List<Rule> list() {
+    public List<FirewallRule> list() {
         log.info("Fetching list of rules");
         return ruleRepository.findAll();
     }
 
-    public boolean isValidRule(Rule rule) {
-        if (rule.getSrcIPs() == null && rule.getSrcGroupID() == null
-                || rule.getDstIPs() == null && rule.getDstGroupID() == null)
+    public boolean isValidRule(FirewallRule firewallRule) {
+        if (firewallRule.getSrcIPs() == null && firewallRule.getSrcGroupID() == null
+                || firewallRule.getDstIPs() == null && firewallRule.getDstGroupID() == null)
             return false;
         return true;
     }
