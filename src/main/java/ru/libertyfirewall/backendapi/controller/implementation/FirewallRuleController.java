@@ -9,7 +9,7 @@ import ru.libertyfirewall.backendapi.controller.LibertyController;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleException;
 import ru.libertyfirewall.backendapi.model.Response;
-import ru.libertyfirewall.backendapi.model.FirewallRule;
+import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
 import ru.libertyfirewall.backendapi.service.implementation.FirewallRuleService;
 
 

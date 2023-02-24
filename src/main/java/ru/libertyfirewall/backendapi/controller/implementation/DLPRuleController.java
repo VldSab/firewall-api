@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.libertyfirewall.backendapi.controller.LibertyController;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
-import ru.libertyfirewall.backendapi.model.DLPRule;
+import ru.libertyfirewall.backendapi.model.rules.DLPRule;
 import ru.libertyfirewall.backendapi.model.Response;
 import ru.libertyfirewall.backendapi.service.implementation.DLPRuleService;
 

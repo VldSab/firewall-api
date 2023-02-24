@@ -1,7 +1,6 @@
-package ru.libertyfirewall.backendapi.util;
+package ru.libertyfirewall.backendapi.util.rules;
 
-import ru.libertyfirewall.backendapi.model.FirewallRule;
-import ru.libertyfirewall.backendapi.model.Rule;
+import ru.libertyfirewall.backendapi.model.rules.Rule;
 
 import java.util.List;
 

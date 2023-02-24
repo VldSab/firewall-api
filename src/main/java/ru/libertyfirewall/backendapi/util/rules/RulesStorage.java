@@ -1,4 +1,4 @@
-package ru.libertyfirewall.backendapi.util;
+package ru.libertyfirewall.backendapi.util.rules;
 
 import lombok.Getter;
 

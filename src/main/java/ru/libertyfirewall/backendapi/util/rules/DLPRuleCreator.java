@@ -1,6 +1,6 @@
-package ru.libertyfirewall.backendapi.util;
+package ru.libertyfirewall.backendapi.util.rules;
 
-import ru.libertyfirewall.backendapi.model.DLPRule;
+import ru.libertyfirewall.backendapi.model.rules.DLPRule;
 
 import java.util.List;
 

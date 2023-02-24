@@ -3,8 +3,8 @@ package ru.libertyfirewall.backendapi.service;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.exeptions.group.NoSuchGroupException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleException;
-import ru.libertyfirewall.backendapi.model.FirewallRule;
-import ru.libertyfirewall.backendapi.model.Rule;
+import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
+import ru.libertyfirewall.backendapi.model.rules.Rule;
 
 import java.util.List;
 

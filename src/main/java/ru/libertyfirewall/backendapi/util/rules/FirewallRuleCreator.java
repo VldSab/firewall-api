@@ -1,9 +1,9 @@
-package ru.libertyfirewall.backendapi.util;
+package ru.libertyfirewall.backendapi.util.rules;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.libertyfirewall.backendapi.model.GroupContainer;
-import ru.libertyfirewall.backendapi.model.FirewallRule;
+import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
 import ru.libertyfirewall.backendapi.repository.GroupRepository;
 
 import java.util.List;

@@ -6,12 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleException;
-import ru.libertyfirewall.backendapi.model.FirewallRule;
+import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
 import ru.libertyfirewall.backendapi.redis.RedisRulesPublisher;
 import ru.libertyfirewall.backendapi.repository.RuleRepository;
 import ru.libertyfirewall.backendapi.service.RuleService;
-import ru.libertyfirewall.backendapi.util.FirewallRuleCreator;
-import ru.libertyfirewall.backendapi.util.RulesStorage;
+import ru.libertyfirewall.backendapi.util.rules.FirewallRuleCreator;
+import ru.libertyfirewall.backendapi.util.rules.RulesStorage;
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
      */
     private final RuleRepository ruleRepository;
     private final RedisRulesPublisher rulesPublisher;
-
     private final FirewallRuleCreator firewallRuleCreator;
 
     @Override

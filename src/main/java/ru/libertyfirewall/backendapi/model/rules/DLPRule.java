@@ -1,4 +1,4 @@
-package ru.libertyfirewall.backendapi.model;
+package ru.libertyfirewall.backendapi.model.rules;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
