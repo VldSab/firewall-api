@@ -1,0 +1,14 @@
+{
+  "modules": [
+    {
+      "name": "FW",
+      "file": "RulesFirewallFileName.rules",
+      "rules": ["rule1", "rule2"]
+    },
+    {
+      "name": "DLP",
+      "file": "RulesDLPFileName.rules",
+      "rules": ["rule1", "rule2"]
+    }
+  ]
+}

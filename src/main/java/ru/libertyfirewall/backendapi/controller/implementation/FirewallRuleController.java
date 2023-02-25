@@ -35,5 +35,4 @@ public class FirewallRuleController extends LibertyController {
         return createResponse(HttpStatus.OK, "Правила получены", firewallRuleService.list());
     }
 
-
 }

@@ -3,6 +3,7 @@ package ru.libertyfirewall.backendapi.model.output;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import ru.libertyfirewall.backendapi.enumeration.modules.ModulesNames;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class Module {
     /***
      * Модуль - абстракция отдельного файла сурикаты.
