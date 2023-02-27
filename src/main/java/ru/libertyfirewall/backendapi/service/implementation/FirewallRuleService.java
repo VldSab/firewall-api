@@ -27,7 +27,7 @@ import java.util.Set;
 @Slf4j
 public class FirewallRuleService implements RuleService<FirewallRule> {
     /**
-     * Управление правилами сурикаты.
+     * Управление правилами файервола сурикаты.
      */
     private final RuleRepository ruleRepository;
     private final RedisRulesPublisher rulesPublisher;
@@ -39,8 +39,10 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
         if (!isValidRule(firewallRule))
             throw new ValidationException("Неверно указаны ip-адреса или ID групп.");
         FirewallRule firewallRuleSaved = ruleRepository.save(firewallRule);
-        // парсинг правила
-        RulesStorage rulesStorage = firewallRuleCreator.createRules(firewallRuleSaved);
+        // получаем все текущие правила
+        List<FirewallRule> relevantRulesList = ruleRepository.findAll();
+        // парсинг всех правил
+        RulesStorage rulesStorage = firewallRuleCreator.createRules(relevantRulesList);
         //формируем модель выходных данных
         Module firewallRuleModule = Module.builder()
                 .name(ModulesNames.FIREWALL)
@@ -51,10 +53,10 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
         String outputMessage = OutputMessage.createMessage(firewallModules);
         // отправление в редис
         rulesPublisher.publish(outputMessage);
-        for (String parsedRule: rulesStorage.getRulesStorage()) {
-            rulesPublisher.publish(parsedRule);
-            log.info("Rules publisher topic {}", rulesPublisher);
-        }
+//        for (String parsedRule: rulesStorage.getRulesStorage()) {
+//            rulesPublisher.publish(parsedRule);
+//            log.info("Rules publisher topic {}", rulesPublisher);
+//        }
         return firewallRuleSaved;
     }
 

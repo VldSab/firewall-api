@@ -4,9 +4,11 @@ public enum FilesNames {
     FIREWALL("Firewall.rules"),
     DLP("DLP.rules");
 
-    FilesNames(String filename) {}
-
     private String filename;
+
+    FilesNames(String filename) {
+        this.filename = filename;
+    }
 
     public String getFilename() {
         return filename;
