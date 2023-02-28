@@ -53,10 +53,6 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
         String outputMessage = OutputMessage.createMessage(firewallModules);
         // отправление в редис
         rulesPublisher.publish(outputMessage);
-//        for (String parsedRule: rulesStorage.getRulesStorage()) {
-//            rulesPublisher.publish(parsedRule);
-//            log.info("Rules publisher topic {}", rulesPublisher);
-//        }
         return firewallRuleSaved;
     }
 
