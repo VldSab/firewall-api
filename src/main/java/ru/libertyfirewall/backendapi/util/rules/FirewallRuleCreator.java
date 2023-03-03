@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.libertyfirewall.backendapi.model.GroupContainer;
 import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
 import ru.libertyfirewall.backendapi.repository.GroupRepository;
+import ru.libertyfirewall.backendapi.repository.RuleRepository;
 
 import java.util.List;
 import java.util.Set;
@@ -29,23 +30,27 @@ public class FirewallRuleCreator implements RulesCreator<FirewallRule> {
         String dstPorts;
         String sid;
 
-        if (firewallRule.getSrcIPs() == null) {
-            GroupContainer srcGroup = groupRepository.getReferenceById(firewallRule.getSrcGroupID());
+        if (firewallRule.getSrcIP() == null) {
+//            GroupContainer srcGroup = groupRepository.getReferenceById(firewallRule.getSrcGroup().getId());
+//            firewallRule.setSrcGroup(srcGroup);
+            GroupContainer srcGroup = firewallRule.getSrcGroup();
             source = "[" + String.join(", ", srcGroup.getIpContainer()) + "]";
             srcPorts = "[" + String.join(", ", srcGroup.getPortContainer()) + "]";
         } else {
-            source = firewallRule.getSrcIPs().equals(ANY) ? ANY : "[" + firewallRule.getSrcIPs() + "]";
-            srcPorts = firewallRule.getSrcPorts().equals(ANY) ? ANY : "[" + firewallRule.getSrcPorts() + "]";
+            source = firewallRule.getSrcIP().equals(ANY) ? ANY : "[" + firewallRule.getSrcIP() + "]";
+            srcPorts = firewallRule.getSrcPort().equals(ANY) ? ANY : "[" + firewallRule.getSrcPort() + "]";
 
         }
 
-        if (firewallRule.getDstIPs() == null) {
-            GroupContainer dstGroup = groupRepository.getReferenceById(firewallRule.getDstGroupID());
+        if (firewallRule.getDstIP() == null) {
+//            GroupContainer dstGroup = groupRepository.getReferenceById(firewallRule.getDstGroup().getId());
+//            firewallRule.setSrcGroup(dstGroup);
+            GroupContainer dstGroup = firewallRule.getDstGroup();
             destination = "[" + String.join(", ", dstGroup.getIpContainer()) + "]";
             dstPorts = "[" + String.join(", ", dstGroup.getPortContainer()) + "]";
         } else {
-            destination = firewallRule.getDstIPs().equals(ANY) ? ANY : "[" + firewallRule.getDstIPs() + "]";
-            dstPorts = firewallRule.getDstPorts().equals(ANY) ? ANY : "[" + firewallRule.getDstPorts() + "]";
+            destination = firewallRule.getDstIP().equals(ANY) ? ANY : "[" + firewallRule.getDstIP() + "]";
+            dstPorts = firewallRule.getDstPort().equals(ANY) ? ANY : "[" + firewallRule.getDstPort() + "]";
         }
 
         sid = "(sid: " + firewallRule.getId().toString() + ";)";

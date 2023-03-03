@@ -9,9 +9,12 @@ spring:
     driverClassName: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
     show-sql: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false

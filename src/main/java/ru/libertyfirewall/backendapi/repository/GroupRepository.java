@@ -5,9 +5,8 @@ import ru.libertyfirewall.backendapi.model.GroupContainer;
 
 import java.util.Optional;
 
-public interface GroupRepository {
+public interface GroupRepository extends JpaRepository<GroupContainer, Long>{
     Optional<GroupContainer> findByName(String name);
 
-    GroupContainer findById(Long id);
     boolean deleteByName(String name);
 }

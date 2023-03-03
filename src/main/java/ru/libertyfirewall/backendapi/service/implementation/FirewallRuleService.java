@@ -8,10 +8,12 @@ import ru.libertyfirewall.backendapi.enumeration.modules.FilesNames;
 import ru.libertyfirewall.backendapi.enumeration.modules.ModulesNames;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleException;
+import ru.libertyfirewall.backendapi.model.GroupContainer;
 import ru.libertyfirewall.backendapi.model.output.Module;
 import ru.libertyfirewall.backendapi.model.output.Modules;
 import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
 import ru.libertyfirewall.backendapi.redis.RedisRulesPublisher;
+import ru.libertyfirewall.backendapi.repository.GroupRepository;
 import ru.libertyfirewall.backendapi.repository.RuleRepository;
 import ru.libertyfirewall.backendapi.service.RuleService;
 import ru.libertyfirewall.backendapi.util.output.OutputMessage;
@@ -19,7 +21,6 @@ import ru.libertyfirewall.backendapi.util.rules.FirewallRuleCreator;
 import ru.libertyfirewall.backendapi.util.rules.RulesStorage;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,8 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
      * Управление правилами файервола сурикаты.
      */
     private final RuleRepository ruleRepository;
+
+    private final GroupRepository groupRepository;
     private final RedisRulesPublisher rulesPublisher;
     private final FirewallRuleCreator firewallRuleCreator;
 
@@ -38,7 +41,15 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
         log.info("Saving new rule");
         if (!isValidRule(firewallRule))
             throw new ValidationException("Неверно указаны ip-адреса или ID групп.");
-        FirewallRule firewallRuleSaved = ruleRepository.save(firewallRule);
+        if (firewallRule.getSrcGroup() != null) {
+            Long srcGroupId = firewallRule.getSrcGroup().getId();
+            Long dstGroupId = firewallRule.getDstGroup().getId();
+            GroupContainer srcGroup = groupRepository.findById(srcGroupId).get();
+            GroupContainer dstGroup = groupRepository.findById(dstGroupId).get();
+            firewallRule.setSrcGroup(srcGroup);
+            firewallRule.setDstGroup(dstGroup);
+        }
+        FirewallRule firewallRuleSaved = ruleRepository.saveAndFlush(firewallRule);
         // получаем все текущие правила
         List<FirewallRule> relevantRulesList = ruleRepository.findAll();
         // парсинг всех правил
@@ -73,8 +84,8 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
     }
 
     public boolean isValidRule(FirewallRule firewallRule) {
-        if (firewallRule.getSrcIPs() == null && firewallRule.getSrcGroupID() == null
-                || firewallRule.getDstIPs() == null && firewallRule.getDstGroupID() == null)
+        if (firewallRule.getSrcIP() == null && firewallRule.getSrcGroup() == null
+                || firewallRule.getDstIP() == null && firewallRule.getDstGroup() == null)
             return false;
         return true;
     }
