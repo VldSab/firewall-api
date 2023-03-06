@@ -1,6 +1,7 @@
 package ru.libertyfirewall.backendapi.controller.implementation;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,10 @@ import ru.libertyfirewall.backendapi.service.implementation.DLPRuleService;
 @RestController
 @RequestMapping("/dlp")
 @CrossOrigin
+@RequiredArgsConstructor
 public class DLPRuleController extends LibertyController implements RuleController<DLPRule> {
 
-    private DLPRuleService dlpRuleService;
+    private final DLPRuleService dlpRuleService;
 
     @PostMapping
     @Override

@@ -1,6 +1,7 @@
 package ru.libertyfirewall.backendapi.model.rules;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,20 +21,25 @@ public class DLPRule implements Rule {
     @Column(name = "id")
     Long id;
     @Column(name = "action")
+    @NotNull
     private Action action;
     @Column(name = "protocol")
+    @NotNull
     private Protocol protocol;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "src_group_id", referencedColumnName = "id", updatable = false)
+    @NotNull
     private GroupContainer srcGroup;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "dst_group_id", referencedColumnName = "id", updatable = false)
+    @NotNull
     private GroupContainer dstGroup;
     @Column(name = "additional_parameters")
     private String additionalRuleParameters;
     @Column(name = "comment")
     private String comment;
-    @Column(name = "sensitive_category")
+    @Column(name = "sensitive_category", nullable = false)
+    @NotNull
     private SensitiveCategory sensitiveCategory;
 
 }

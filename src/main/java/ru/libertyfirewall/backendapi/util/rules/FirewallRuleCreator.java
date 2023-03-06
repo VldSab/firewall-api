@@ -19,7 +19,7 @@ public class FirewallRuleCreator implements RulesCreator<FirewallRule> {
      */
     private final GroupRepository groupRepository;
 
-    private String parseRule(FirewallRule firewallRule) {
+    public String parseRule(FirewallRule firewallRule) {
         final String SPACE = " ";
         final String ARROW = "->";
         final String ANY = "any";

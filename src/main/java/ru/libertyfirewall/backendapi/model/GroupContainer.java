@@ -27,15 +27,15 @@ public class GroupContainer {
     private String name;
     @ElementCollection
     @CollectionTable(
-            name="ip_container",
-            joinColumns=@JoinColumn(name="group_id")
+            name = "ip_container",
+            joinColumns = @JoinColumn(name = "group_id")
     )
     @Column(name = "ip")
     private Collection<String> ipContainer;
     @ElementCollection
     @CollectionTable(
-            name="port_container",
-            joinColumns=@JoinColumn(name="group_id")
+            name = "port_container",
+            joinColumns = @JoinColumn(name = "group_id")
     )
     @Column(name = "port")
     private Collection<String> portContainer;
