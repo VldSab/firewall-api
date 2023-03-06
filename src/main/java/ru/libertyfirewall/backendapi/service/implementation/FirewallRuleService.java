@@ -14,7 +14,7 @@ import ru.libertyfirewall.backendapi.model.output.Modules;
 import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
 import ru.libertyfirewall.backendapi.redis.RedisRulesPublisher;
 import ru.libertyfirewall.backendapi.repository.GroupRepository;
-import ru.libertyfirewall.backendapi.repository.RuleRepository;
+import ru.libertyfirewall.backendapi.repository.FirewallRuleRepository;
 import ru.libertyfirewall.backendapi.service.RuleService;
 import ru.libertyfirewall.backendapi.util.output.OutputMessage;
 import ru.libertyfirewall.backendapi.util.rules.FirewallRuleCreator;
@@ -24,14 +24,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class FirewallRuleService implements RuleService<FirewallRule> {
     /**
      * Управление правилами файервола сурикаты.
      */
-    private final RuleRepository ruleRepository;
-
+    private final FirewallRuleRepository ruleRepository;
     private final GroupRepository groupRepository;
     private final RedisRulesPublisher rulesPublisher;
     private final FirewallRuleCreator firewallRuleCreator;
@@ -49,7 +47,7 @@ public class FirewallRuleService implements RuleService<FirewallRule> {
             firewallRule.setSrcGroup(srcGroup);
             firewallRule.setDstGroup(dstGroup);
         }
-        FirewallRule firewallRuleSaved = ruleRepository.saveAndFlush(firewallRule);
+        FirewallRule firewallRuleSaved = ruleRepository.save(firewallRule);
         // получаем все текущие правила
         List<FirewallRule> relevantRulesList = ruleRepository.findAll();
         // парсинг всех правил

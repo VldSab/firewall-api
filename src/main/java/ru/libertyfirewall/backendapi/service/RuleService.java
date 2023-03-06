@@ -9,7 +9,7 @@ import ru.libertyfirewall.backendapi.model.rules.Rule;
 import java.util.List;
 
 public interface RuleService<R extends Rule> {
-    FirewallRule create(R firewallRule) throws ValidationException;
+    R create(R firewallRule) throws ValidationException, NoSuchGroupException;
     boolean delete(Long id) throws NoSuchGroupException, NoSuchRuleException;
-    List<FirewallRule> list();
+    List<R> list();
 }

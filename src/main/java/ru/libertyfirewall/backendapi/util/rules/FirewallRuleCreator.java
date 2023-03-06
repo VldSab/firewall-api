@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.libertyfirewall.backendapi.model.GroupContainer;
 import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
 import ru.libertyfirewall.backendapi.repository.GroupRepository;
-import ru.libertyfirewall.backendapi.repository.RuleRepository;
 
 import java.util.List;
 import java.util.Set;
