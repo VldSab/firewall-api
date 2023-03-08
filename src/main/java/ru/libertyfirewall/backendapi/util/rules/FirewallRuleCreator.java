@@ -30,8 +30,6 @@ public class FirewallRuleCreator implements RulesCreator<FirewallRule> {
         String sid;
 
         if (firewallRule.getSrcIP() == null) {
-//            GroupContainer srcGroup = groupRepository.getReferenceById(firewallRule.getSrcGroup().getId());
-//            firewallRule.setSrcGroup(srcGroup);
             GroupContainer srcGroup = firewallRule.getSrcGroup();
             source = "[" + String.join(", ", srcGroup.getIpContainer()) + "]";
             srcPorts = "[" + String.join(", ", srcGroup.getPortContainer()) + "]";
@@ -42,8 +40,6 @@ public class FirewallRuleCreator implements RulesCreator<FirewallRule> {
         }
 
         if (firewallRule.getDstIP() == null) {
-//            GroupContainer dstGroup = groupRepository.getReferenceById(firewallRule.getDstGroup().getId());
-//            firewallRule.setSrcGroup(dstGroup);
             GroupContainer dstGroup = firewallRule.getDstGroup();
             destination = "[" + String.join(", ", dstGroup.getIpContainer()) + "]";
             dstPorts = "[" + String.join(", ", dstGroup.getPortContainer()) + "]";

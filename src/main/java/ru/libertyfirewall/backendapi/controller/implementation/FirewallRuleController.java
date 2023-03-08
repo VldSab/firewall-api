@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.libertyfirewall.backendapi.controller.LibertyController;
 import ru.libertyfirewall.backendapi.controller.RuleController;
 import ru.libertyfirewall.backendapi.exeptions.ValidationException;
+import ru.libertyfirewall.backendapi.exeptions.group.NoSuchGroupException;
 import ru.libertyfirewall.backendapi.exeptions.rule.NoSuchRuleException;
 import ru.libertyfirewall.backendapi.model.Response;
 import ru.libertyfirewall.backendapi.model.rules.FirewallRule;
@@ -23,7 +24,7 @@ public class FirewallRuleController extends LibertyController implements RuleCon
 
     @PostMapping
     @Override
-    public ResponseEntity<Response> saveRule(@RequestBody @Valid FirewallRule firewallRule) throws ValidationException {
+    public ResponseEntity<Response> saveRule(@RequestBody @Valid FirewallRule firewallRule) throws ValidationException, NoSuchGroupException {
         return createResponse(HttpStatus.OK, "Правило создано", firewallRuleService.create(firewallRule));
     }
 

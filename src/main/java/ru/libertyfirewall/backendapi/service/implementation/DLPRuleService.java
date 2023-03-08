@@ -14,6 +14,7 @@ import ru.libertyfirewall.backendapi.model.rules.DLPRule;
 import ru.libertyfirewall.backendapi.redis.RedisRulesPublisher;
 import ru.libertyfirewall.backendapi.repository.DLPRuleRepository;
 import ru.libertyfirewall.backendapi.repository.GroupRepository;
+import ru.libertyfirewall.backendapi.service.Messaging;
 import ru.libertyfirewall.backendapi.service.RuleService;
 import ru.libertyfirewall.backendapi.util.output.OutputMessage;
 import ru.libertyfirewall.backendapi.util.rules.DLPRuleCreator;
@@ -26,7 +27,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class DLPRuleService implements RuleService<DLPRule> {
+public class DLPRuleService implements RuleService<DLPRule>, Messaging {
 
     private final DLPRuleRepository ruleRepository;
     private final GroupRepository groupRepository;
@@ -45,30 +46,30 @@ public class DLPRuleService implements RuleService<DLPRule> {
         firewallRule.setSrcGroup(srsGroup.get());
         firewallRule.setDstGroup(dstGroup.get());
         ruleRepository.save(firewallRule);
-        // получаем все текущие правила
-        List<DLPRule> relevantRulesList = ruleRepository.findAll();
-        // парсинг всех правил
-        RulesStorage rulesStorage = firewallRuleCreator.createRules(relevantRulesList);
-        //формируем модель выходных данных
-        Module dlpRuleModule = Module.builder()
-                .name(ModulesNames.DLP)
-                .fileName(FilesNames.DLP.getFilename())
-                .ruleset(rulesStorage.getRulesStorage())
-                .build();
-        Modules dlpModules = new Modules(List.of(dlpRuleModule));
-        String outputMessage = OutputMessage.createMessage(dlpModules);
         // отправление в редис
-        rulesPublisher.publish(outputMessage);
+        rulesPublisher.publish(prepareMessageToSend());
         return firewallRule;
     }
 
     @Override
     public boolean delete(Long id) throws NoSuchRuleException {
         log.info("Удаление dlp-правила");
-        Optional<DLPRule> dlpRule = ruleRepository.findById(id);
-        if (dlpRule.isEmpty())
+        if (ruleRepository.findById(id).isEmpty())
             throw new NoSuchRuleException("Нет DLP-правила с таким ID");
         ruleRepository.deleteById(id);
+        // отправление в редис
+        rulesPublisher.publish(prepareMessageToSend());
+        return true;
+    }
+
+    @Override
+    public List<DLPRule> list() {
+        log.info("Получение всех правил");
+        return ruleRepository.findAll();
+    }
+
+    @Override
+    public String prepareMessageToSend() {
         // получаем все текущие правила
         List<DLPRule> relevantRulesList = ruleRepository.findAll();
         // парсинг всех правил
@@ -80,14 +81,6 @@ public class DLPRuleService implements RuleService<DLPRule> {
                 .ruleset(rulesStorage.getRulesStorage())
                 .build();
         Modules dlpModules = new Modules(List.of(dlpRuleModule));
-        String outputMessage = OutputMessage.createMessage(dlpModules);
-        // отправление в редис
-        rulesPublisher.publish(outputMessage);
-        return true;
-    }
-
-    @Override
-    public List<DLPRule> list() {
-        return null;
+        return OutputMessage.createMessage(dlpModules);
     }
 }

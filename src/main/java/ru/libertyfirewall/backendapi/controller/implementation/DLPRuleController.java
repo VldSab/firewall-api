@@ -1,6 +1,7 @@
 package ru.libertyfirewall.backendapi.controller.implementation;
 
 import jakarta.validation.Valid;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,9 @@ public class DLPRuleController extends LibertyController implements RuleControll
         return createResponse(HttpStatus.OK, "DLP-правило сохранено", dlpRuleService.create(rule));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/id/{id}")
     @Override
-    public ResponseEntity<Response> deleteRule(Long id) throws NoSuchRuleException {
+    public ResponseEntity<Response> deleteRule(@PathVariable @NonNull Long id) throws NoSuchRuleException {
         return createResponse(HttpStatus.OK, "DLP-правило удалено", dlpRuleService.delete(id));
     }
 
