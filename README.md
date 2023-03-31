@@ -107,7 +107,7 @@ Status: In Review
 2. Включить поддержку iommu в ядре Linux
 3. Подключить HugePages (минимум 1 Гб)
 4. Скачать репозитории:
-а) fw-backend-api
+а) firewall-api
 б) fw-web-face
 в) fw-core-modules
 г) suricata-extended (скачать в репозиторий fw-core-modules)
